@@ -8,6 +8,9 @@ How to use
 ```javascript
 var thingy = require("thingy");
 ```
+```
+Starus Bar: thingy@0.0.1 Thingy does things better than no other npm does so well
+```
 Place your cursor on any line containing a 'require' method (see above) in a node.js file and the version and description of the NPM will display in status bar of the Sublime Text window.
 
 Open the Sublime Text console (Ctrl+`) to see the entire package.json file for the NPM logged.
