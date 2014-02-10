@@ -24,6 +24,7 @@ class NPMInfoEvents(sublime_plugin.EventListener):
     def doCheck(self, view):
 
         if view.is_scratch() or (view.file_name() and view.file_name().endswith('.js') == False):
+            self.busy = False
             return
 
         view.set_status('NPMInfo', '')
