@@ -5,6 +5,7 @@ class NPMInfoEvents(sublime_plugin.EventListener):
     def __init__(self):
         self.packagePaths = {}
         self.settings = sublime.load_settings('NPMInfo.sublime-settings')
+        self.busy = False
 
     def on_load(self, view):
         fn = view.file_name()
@@ -12,6 +13,16 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             del self.packagePaths[fn]
 
     def on_selection_modified(self, view):
+
+        if self.busy == True:
+            return
+
+        self.busy = True
+        sublime.set_timeout(lambda: self.doCheck(view), 500)
+
+
+    def doCheck(self, view):
+
         if view.is_scratch() or (view.file_name() and view.file_name().endswith('.js') == False):
             return
 
@@ -34,6 +45,8 @@ class NPMInfoEvents(sublime_plugin.EventListener):
                     view.set_status('NPMInfo', npm + "@" + o['version'] + " - " + desc)
                 else:
                     view.set_status('NPMInfo', 'No package.json found for "' + npm + '"')
+
+        self.busy = False
 
     def getJson(self, pkgPath):
         with open(pkgPath) as json_data:
