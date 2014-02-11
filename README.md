@@ -1,7 +1,7 @@
 NPM Info
 ========
 
-Sublime Text plugin for displaying information about modules included through require() in node.js files. Placing your cursor on a line that contains a require() will show a menu to quickly link to the package.json, open the modules repo in a browser, or list properties and methods. It also displays version and module description in the status bar and menu panel.
+Sublime Text plugin for displaying information about modules included through require() in node.js files. Placing your cursor on a line that contains a require() will show a menu to quickly link to the package.json file, open the modules repo in a browser, or list properties and methods. It also displays version and module description in the status bar and menu panel.
 
 How to use
 ========
