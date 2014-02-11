@@ -17,7 +17,7 @@ For example:
 
 Also, version and description appears in status bar:
 ```
-thingy@0.0.1 - Thingy does things better than no other npm does so well
+lodash@2.4.1 - A utility library delivering consistency, customization, performance, & extras.
 ```
 
 **Note:** Version and description for native node.js modules and requires of non-modules won't display as they have no associated package.json file.
