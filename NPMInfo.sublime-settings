@@ -1,3 +1,4 @@
 {
-    "printPackageJson": true
+    "showQuickPanel": true,
+    "showQuickPanelDelay": 2000
 }
