@@ -6,7 +6,7 @@ Sublime Text plugin for displaying information about modules included through re
 How to use
 ========
 
-Place your cursor on lines like this for 1.5 seconds (for this version, modules must exist in node_modules folder):
+Place your cursor on lines like this for 1.5 seconds (configurable):
 ```javascript
 var thingy = require("thingy");
 ```
@@ -20,7 +20,7 @@ Also, version and description appears in status bar:
 thingy@0.0.1 - Thingy does things better than no other npm does so well
 ```
 
-**Note:** Version and description for native node.js modules won't display as they have no associated package.json file.
+**Note:** Version and description for native node.js modules and requires of non-modules won't display as they have no associated package.json file.
 
 Installation
 ========
