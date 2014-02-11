@@ -6,7 +6,7 @@ Sublime Text plugin for displaying information about modules included through re
 How to use
 ========
 
-Place your cursor on lines like this (for this version, modules must exist in node_modules folder):
+Place your cursor on lines like this for 1.5 seconds (for this version, modules must exist in node_modules folder):
 ```javascript
 var thingy = require("thingy");
 ```
