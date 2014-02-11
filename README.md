@@ -5,15 +5,20 @@ Sublime Text plugin for displaying information about modules included through re
 
 How to use
 ========
+
+Place your cursor on lines like this (for this version, modules must exist in node_modules folder):
 ```javascript
 var thingy = require("thingy");
 ```
-```
-Starus Bar: thingy@0.0.1 - Thingy does things better than no other npm does so well
-```
-Place your cursor on any line containing a 'require' method (see above) in a node.js file and the version and description of the NPM will display in status bar of the Sublime Text window.
 
-Open the Sublime Text console (Ctrl+`) to see the entire package.json file for the NPM logged.
+For example:
+![](https://raw.github.com/dsteinbach/npm-info/screenshots/thingy.jpg)
+
+
+Also, version and description appears in status bar:
+```
+thingy@0.0.1 - Thingy does things better than no other npm does so well
+```
 
 **Note:** Version and description for native node.js modules won't display as they have no associated package.json file.
 
