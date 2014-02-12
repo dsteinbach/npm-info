@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, re, json, os, webbrowser, subprocess
+import sublime, sublime_plugin, re, json, os, webbrowser, subprocess, sys
 
 class NPMInfoEvents(sublime_plugin.EventListener):
 
@@ -91,12 +91,16 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             sublime.message_dialog(self.pkgJson['description'])
 
     def listPropsAndMethods(self):
-        nodeLoc = '/usr/local/bin/node'
-        if sublime.platform() == 'windows':
-            nodeLoc = 'C:\Program Files\Nodejs'
-        cmd = [nodeLoc, 'npm-info', self.pkgPath]
         res = []
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if sublime.platform() == 'windows':
+            app = 'node'
+            cmd = [app, 'npm-info', self.pkgPath]
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
+        else:
+            cmd = ['/usr/local/bin/node', 'npm-info', self.pkgPath]
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         for line in iter(p.stdout.readline, b''):
             lineStrip = line.rstrip()
