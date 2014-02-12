@@ -27,9 +27,9 @@ Installation
 Installation via Package Control coming soon but for now you can download this repo zipped and unpack to:
 ```
 OSX:
-~/Library/Application Support/Sublime Text 2/Packages
+~/Library/Application Support/Sublime Text 2/Packages/NPMInfo
 ```
 ```
 Windows:
-%APPDATA%\Sublime Text 2\Packages
+%APPDATA%\Sublime Text 2\Packages\NPMInfo
 ```
