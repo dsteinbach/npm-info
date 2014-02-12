@@ -144,3 +144,5 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         else:
             # move up dir, and call again
             return self.getPackagePath(npm, dir)
+
+
