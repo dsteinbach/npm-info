@@ -129,7 +129,7 @@ class NPMInfoEvents(sublime_plugin.EventListener):
     def getPackagePath(self, npm, dir):
         dir = os.path.dirname(dir)
 
-        if len(dir) <= 1:
+        if len(dir) <= 3:
             return False
 
         fn = dir + '/node_modules/' + npm + '/package.json'
