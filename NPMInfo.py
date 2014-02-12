@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, re, json, os, webbrowser, subprocess, sys
+import sublime, sublime_plugin, re, json, os, webbrowser, subprocess
 
 class NPMInfoEvents(sublime_plugin.EventListener):
 
