@@ -36,9 +36,17 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         if reg.empty():
             line = view.line(reg)
             line_contents = view.substr(line)
-            matchObj = re.match(r'(.*)require\(([\"\']+)([a-zA-Z0-9\_\-]*)([\"\']+)\)(.*)', line_contents)
+            matchObj = re.match(r'.*require\(([\"\']+)([a-zA-Z0-9\_\-]*)([\"\']+)\).*', line_contents)
             if matchObj:
-                npm = matchObj.group(3)
+                npm = matchObj.group(2)
+                qt = matchObj.group(1)
+                npmStart = (line_contents.find("require(" + qt + npm + qt + ")") + 9)
+                npmEnd = npmStart + len(npm) + 1
+                col = view.rowcol(reg.b)[1]
+                if col >= npmEnd or col < npmStart:
+                    self.busy = False
+                    return
+
                 dir = view.file_name()
                 pkgPath = self.getPackagePath(npm, dir)
                 o = self.getInfo(npm, dir, pkgPath)
@@ -83,7 +91,10 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             sublime.message_dialog(self.pkgJson['description'])
 
     def listPropsAndMethods(self):
-        cmd = ['/usr/local/bin/node', 'npm-info', self.pkgPath]
+        nodeLoc = '/usr/local/bin/node'
+        if sublime.platform() == 'windows':
+            nodeLoc = 'C:\Program Files\Nodejs'
+        cmd = [nodeLoc, 'npm-info', self.pkgPath]
         res = []
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
