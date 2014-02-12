@@ -1,21 +1,26 @@
 NPM Info
 ========
 
-Sublime Text plugin for displaying version and description of node.js NPMs in the status bar of opened javascript files.
+Sublime Text plugin for displaying information about modules included through require() in node.js files. Placing your cursor on a line that contains a require() will show a menu to quickly link to the package.json file, open the modules repo in a browser, or list properties and methods. It also displays version and module description in the status bar and menu panel.
 
 How to use
 ========
+
+Place your cursor on lines like this for 1.5 seconds (configurable):
 ```javascript
 var thingy = require("thingy");
 ```
-```
-Starus Bar: thingy@0.0.1 - Thingy does things better than no other npm does so well
-```
-Place your cursor on any line containing a 'require' method (see above) in a node.js file and the version and description of the NPM will display in status bar of the Sublime Text window.
 
-Open the Sublime Text console (Ctrl+`) to see the entire package.json file for the NPM logged.
+For example:
+![](https://raw.github.com/dsteinbach/npm-info/screenshots/thingy.jpg)
 
-**Note:** Version and description for native node.js modules won't display as they have no associated package.json file.
+
+Also, version and description appears in status bar:
+```
+lodash@2.4.1 - A utility library delivering consistency, customization, performance, & extras.
+```
+
+**Note:** Version and description for native node.js modules and requires of non-modules won't display as they have no associated package.json file.
 
 Installation
 ========
