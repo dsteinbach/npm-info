@@ -94,7 +94,8 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         res = []
         if sublime.platform() == 'windows':
             app = 'node'
-            cmd = [app, 'npm-info', self.pkgPath]
+            pathToJS = sublime.packages_path() + '\\NPMInfo\\npm-info.js'
+            cmd = [app, pathToJS, self.pkgPath]
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
