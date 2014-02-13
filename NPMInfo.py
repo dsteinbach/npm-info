@@ -7,8 +7,8 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         self.settings = sublime.load_settings('NPMInfo.sublime-settings')
         self.busy = False
         self.showQuickPanelDelay = self.settings.get('showQuickPanelDelay')
-        if isinstance(self.showQuickPanelDelay, (int, long, float, complex)) == False:
-            self.showQuickPanelDelay = 500
+        if isinstance(self.showQuickPanelDelay, (int, long)) == False:
+            self.showQuickPanelDelay = 1500
 
     def on_load(self, view):
         fn = view.file_name()
