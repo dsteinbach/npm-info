@@ -24,7 +24,17 @@ lodash@2.4.1 - A utility library delivering consistency, customization, performa
 
 Installation
 ========
-Installation via Package Control coming soon but for now you can unzip the contents of this repo to a folder called `NPMInfo` in this location:
+
+### Via Package Control
+First make sure you have Package Control installed (https://sublime.wbond.net/installation) and then:
+
+* Open Package Control: `ctrl+shift+p` (Win, Linux) or `cmd+shift+p` (OS X)
+* Find and select: `Package Control: Install Package`
+* Search for `NPMInfo` and hit return
+
+### Manual Install
+
+Unzip the contents of this repo to a folder called `NPMInfo` at this location:
 ```
 OSX:
 ~/Library/Application Support/Sublime Text 2/Packages/NPMInfo
