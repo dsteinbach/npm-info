@@ -99,12 +99,14 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
         else:
-            cmd = ['/usr/local/bin/node', 'npm-info', self.pkgPath]
+            pathToJS = sublime.packages_path() + '/NPMInfo/npm-info.js'
+            cmd = ['/usr/local/bin/node', pathToJS, self.pkgPath]
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         for line in iter(p.stdout.readline, b''):
             lineStrip = line.rstrip()
-            if len(lineStrip) > 0 and ' ' not in lineStrip: # ignore messages
+            # ignore console logs outputted when requiring module
+            if len(lineStrip) > 0 and ' ' not in lineStrip:
                 res.append(lineStrip)
 
         self.view.window().show_quick_panel(res, self.onSelectPropAndMethod)
