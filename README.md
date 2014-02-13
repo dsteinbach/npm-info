@@ -24,7 +24,7 @@ lodash@2.4.1 - A utility library delivering consistency, customization, performa
 
 Installation
 ========
-Installation via Package Control coming soon but for now you can download this repo zipped and unpack to:
+Installation via Package Control coming soon but for now you can unzip the contents of this repo to a folder called `NPMInfo` in this location:
 ```
 OSX:
 ~/Library/Application Support/Sublime Text 2/Packages/NPMInfo
