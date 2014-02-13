@@ -49,6 +49,12 @@ class NPMInfoEvents(sublime_plugin.EventListener):
 
                 dir = view.file_name()
                 pkgPath = self.getPackagePath(npm, dir)
+                self.pkgGlobal = False
+                if pkgPath == False:
+                    pkgPath = self.getPackageGlobalPath(npm, dir)
+                    if pkgPath != False:
+                        self.pkgGlobal = True
+
                 o = self.getInfo(npm, dir, pkgPath)
                 self.pkgPath = pkgPath
                 self.pkgJson = o
@@ -59,10 +65,14 @@ class NPMInfoEvents(sublime_plugin.EventListener):
                         desc = o['description']
                     else:
                         desc = "No description found"
-                    view.set_status('NPMInfo', npm + "@" + o['version'] + " - " + desc)
 
-                    self.quickPanelOptions = [npm + " v" + o['version'], 'List properties and methods', 'Open package.json']
-                    if 'repository' in o and 'url' in o['repository']:
+                    npmAndVersion = npm + "@" + o['version']
+                    if self.pkgGlobal:
+                        npmAndVersion += " (global)"
+                    view.set_status('NPMInfo', npmAndVersion + " - " + desc)
+
+                    self.quickPanelOptions = [npmAndVersion, 'List properties and methods', 'Open package.json']
+                    if 'repository' in o and 'url' in o['repository'] and o['repository']['url'].startswith('http'):
                         self.quickPanelOptions += ['Open repo in browser']
 
                     if self.settings.get('showQuickPanel'):
@@ -132,6 +142,18 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         else:
             self.packagePaths[dir][npm] = pkgPath
             return self.getJson(pkgPath)
+
+    def getPackageGlobalPath(self, npm, dir):
+        # TODO: dont rely on hardcoded locations
+        if sublime.platform() == 'windows':
+            fn = "C:\\Program Files (x86)\\nodejs\\node_modules\\" + npm + "\\package.json"
+        else:
+            fn = "/usr/local/lib/node_modules/" + npm + "/package.json"
+
+        if os.path.exists(fn):
+            return fn
+        else:
+            return False
 
     def getPackagePath(self, npm, dir):
         dir = os.path.dirname(dir)
