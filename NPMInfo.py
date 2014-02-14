@@ -4,11 +4,16 @@ class NPMInfoEvents(sublime_plugin.EventListener):
 
     def __init__(self):
         self.packagePaths = {}
-        self.settings = sublime.load_settings('NPMInfo.sublime-settings')
         self.busy = False
+        self.loadSettings()
+
+    def loadSettings(self):
+        self.settings = sublime.load_settings('NPMInfo.sublime-settings')
         self.showQuickPanelDelay = self.settings.get('showQuickPanelDelay')
         if isinstance(self.showQuickPanelDelay, (int, long)) == False:
             self.showQuickPanelDelay = 1500
+
+        self.settings_loaded = True
 
     def on_load(self, view):
         fn = view.file_name()
@@ -31,6 +36,12 @@ class NPMInfoEvents(sublime_plugin.EventListener):
 
         view.set_status('NPMInfo', '')
         self.view = view
+
+        try:
+            if self.settings_loaded == True:
+                pass
+        except Exception:
+            self.loadSettings()
 
         reg = view.sel()[0]
         if reg.empty():
@@ -146,8 +157,9 @@ class NPMInfoEvents(sublime_plugin.EventListener):
     def getPackageGlobalPath(self, npm, dir):
         # TODO: dont rely on hardcoded locations
         if sublime.platform() == 'windows':
-            fn = "C:\\Program Files (x86)\\nodejs\\node_modules\\" + npm + "\\package.json"
+            fn =  os.environ.get('APPDATA') + "\\npm\\node_modules\\" + npm + "\\package.json"
         else:
+            # LDPATH ?
             fn = "/usr/local/lib/node_modules/" + npm + "/package.json"
 
         if os.path.exists(fn):
@@ -161,7 +173,10 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         if len(dir) <= 3:
             return False
 
-        fn = dir + '/node_modules/' + npm + '/package.json'
+        if sublime.platform() == 'windows':
+            fn = dir + '\\node_modules\\' + npm + '\\package.json'
+        else:
+            fn = dir + '/node_modules/' + npm + '/package.json'
 
         if os.path.exists(fn):
             # get info
@@ -169,5 +184,4 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         else:
             # move up dir, and call again
             return self.getPackagePath(npm, dir)
-
 
