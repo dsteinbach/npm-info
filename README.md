@@ -16,7 +16,7 @@ For example:
 
 
 Also, version and description appears in status bar:
-```javascript
+```
 lodash@2.4.1 - A utility library delivering consistency, customization, performance, & extras.
 ```
 
