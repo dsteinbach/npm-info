@@ -1,5 +1,7 @@
 import sublime, sublime_plugin, re, json, os, webbrowser, subprocess
 
+ST3 = int(sublime.version()) >= 3000
+
 class NPMInfoEvents(sublime_plugin.EventListener):
 
     def __init__(self):
@@ -7,15 +9,20 @@ class NPMInfoEvents(sublime_plugin.EventListener):
         self.busy = False
         self.loadSettings()
 
-    def loadSettings(self):
-        self.settings = sublime.load_settings('NPMInfo.sublime-settings')
-        self.showQuickPanelDelay = self.settings.get('showQuickPanelDelay')
-        self.showQuickPanel = self.settings.get('showQuickPanel')
-        if self.showQuickPanelDelay == None or isinstance(self.showQuickPanelDelay, (int, long)) == False:
-            self.showQuickPanelDelay = 1500
+    def get_setting(self, name, default=None):
+        v = settings.get(name)
+        if v == None:
+            try:
+                return sublime.active_window().active_view().settings().get(name, default)
+            except AttributeError:
+                # No view defined.
+                return default
+        else:
+            return v
 
-        if self.showQuickPanel != None or isinstance(self.showQuickPanel, (bool)) == False:
-            self.showQuickPanel = True
+    def loadSettings(self):
+        self.showQuickPanelDelay = self.get_setting('showQuickPanelDelay', 1500)
+        self.showQuickPanel = self.get_setting('showQuickPanel', True)
 
     def on_load(self, view):
         fn = view.file_name()
@@ -23,6 +30,8 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             del self.packagePaths[fn]
 
         self.view = view
+
+    def on_post_save(self, view):
         self.loadSettings()
 
     def on_selection_modified(self, view):
@@ -182,3 +191,9 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             # move up dir, and call again
             return self.getPackagePath(npm, dir)
 
+    def plugin_loaded():
+        global settings
+        settings = sublime.load_settings('NPMInfo.sublime-settings')
+
+    if not ST3:
+        plugin_loaded()
