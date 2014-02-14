@@ -16,9 +16,7 @@ For example:
 
 
 Also, version and description appears in status bar:
-```
-lodash@2.4.1 - A utility library delivering consistency, customization, performance, & extras.
-```
+```lodash@2.4.1 - A utility library delivering consistency, customization, performance, & extras.```
 
 **Note:** Information for native Node NPMs `require('fs')` and non-NPMs `require("../script.js")` won't display as they have no associated package.json file.
 
