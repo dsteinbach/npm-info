@@ -10,10 +10,12 @@ class NPMInfoEvents(sublime_plugin.EventListener):
     def loadSettings(self):
         self.settings = sublime.load_settings('NPMInfo.sublime-settings')
         self.showQuickPanelDelay = self.settings.get('showQuickPanelDelay')
-        if isinstance(self.showQuickPanelDelay, (int, long)) == False:
+        self.showQuickPanel = self.settings.get('showQuickPanel')
+        if self.showQuickPanelDelay == None or isinstance(self.showQuickPanelDelay, (int, long)) == False:
             self.showQuickPanelDelay = 1500
 
-        self.settings_loaded = True
+        if self.showQuickPanel != None or isinstance(self.showQuickPanel, (bool)) == False:
+            self.showQuickPanel = True
 
     def on_load(self, view):
         fn = view.file_name()
@@ -21,6 +23,7 @@ class NPMInfoEvents(sublime_plugin.EventListener):
             del self.packagePaths[fn]
 
         self.view = view
+        self.loadSettings()
 
     def on_selection_modified(self, view):
         if self.busy == True:
@@ -36,12 +39,6 @@ class NPMInfoEvents(sublime_plugin.EventListener):
 
         view.set_status('NPMInfo', '')
         self.view = view
-
-        try:
-            if self.settings_loaded == True:
-                pass
-        except Exception:
-            self.loadSettings()
 
         reg = view.sel()[0]
         if reg.empty():
@@ -86,7 +83,7 @@ class NPMInfoEvents(sublime_plugin.EventListener):
                     if 'repository' in o and 'url' in o['repository'] and o['repository']['url'].startswith('http'):
                         self.quickPanelOptions += ['Open repo in browser']
 
-                    if self.settings.get('showQuickPanel'):
+                    if self.showQuickPanel:
                         view.window().show_quick_panel(self.quickPanelOptions, self.quickPanelSelect)
 
                 else:
