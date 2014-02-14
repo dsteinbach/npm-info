@@ -1,9 +1,11 @@
 var fs = require('fs'),
     pkgLoc = process.argv[2],
+    isWin = /^win/.test(process.platform),
+    slash = isWin ? '\\' : '/',
     pkgFolder = getFolder(pkgLoc);
 
 function getFolder(pkgLoc) {
-    return pkgLoc.substr(0, pkgLoc.lastIndexOf('/'));
+    return pkgLoc.substr(0, pkgLoc.lastIndexOf(slash));
 }
 
 function getMethodsAndPropsStr(obj) {
@@ -36,7 +38,7 @@ fs.readFile(pkgLoc, 'utf8', function (err, data) {
         if (p && p.main) {
             npmFn = p.main;
         }
-        n = require(pkgFolder + '/' + npmFn);
+        n = require(pkgFolder + slash + npmFn);
     } catch (e) {
         n = null;
     }
