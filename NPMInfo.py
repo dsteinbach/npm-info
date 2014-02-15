@@ -1,3 +1,7 @@
+# Copyright (c) 2014, Yahoo! Inc. All rights reserved.
+# Copyrights licensed under the New BSD License.
+# See the accompanying LICENSE file for terms.
+
 import sublime, sublime_plugin, re, json, os, webbrowser, subprocess
 
 ST3 = int(sublime.version()) >= 3000
